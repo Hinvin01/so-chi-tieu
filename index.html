@@ -34,15 +34,13 @@
   }
   .so { font-variant-numeric: tabular-nums; }
 
-  /* ===== Đầu trang: chọn tháng + tổng ===== */
+  /* ===== Đầu trang: chọn tháng/năm + tổng ===== */
   header {
     background: var(--muc);
     color: #fff;
     padding: calc(14px + env(safe-area-inset-top, 0px)) 18px 22px;
   }
-  .thang {
-    display: flex; align-items: center; justify-content: space-between;
-  }
+  .thang { display: flex; align-items: center; justify-content: space-between; }
   .thang button {
     width: 44px; height: 44px; border: 0; border-radius: 12px;
     background: rgba(255,255,255,.12); color: #fff; font-size: 22px; line-height: 1;
@@ -54,63 +52,81 @@
   .tong-so { font-size: 38px; font-weight: 700; letter-spacing: -0.5px; }
   .tong-so small { font-size: 20px; font-weight: 500; margin-left: 4px; color: #B9C6D3; }
 
-  /* ===== Các nhóm chi tiêu ===== */
-  main { padding: 14px 14px 0; display: grid; gap: 12px; }
-  .nhom {
-    background: var(--giay);
-    border: 1px solid var(--vien);
-    border-radius: 14px;
-    overflow: hidden;
+  /* ===== Hai tab: Nhập / Kết quả ===== */
+  .tabs { display: flex; gap: 8px; padding: 12px 14px 0; }
+  .tabs button {
+    flex: 1; height: 46px; border-radius: 12px; font-size: 16px; font-weight: 600;
+    font-family: var(--font); border: 1.5px solid var(--vien);
+    background: var(--giay); color: var(--muc-nhat);
   }
-  .nhom-dau {
-    display: flex; align-items: center; gap: 10px;
-    padding: 12px 12px 12px 14px;
-    border-left: 6px solid var(--mau);
-  }
+  .tabs button.chon { background: var(--muc); border-color: var(--muc); color: #fff; }
+
+  /* ===== Tab Nhập: các nhóm chi tiêu ===== */
+  main { padding: 12px 14px 0; display: grid; gap: 12px; }
+  .nhom { background: var(--giay); border: 1px solid var(--vien); border-radius: 14px; overflow: hidden; }
+  .nhom-dau { display: flex; align-items: center; gap: 10px; padding: 12px 12px 12px 14px; border-left: 6px solid var(--mau); }
   .nhom-dau .ten { flex: 1; font-weight: 600; }
   .nhom-dau .tien { font-weight: 600; }
   .nhom-dau .them {
     width: 36px; height: 36px; border: 1px solid var(--vien); border-radius: 10px;
-    background: var(--giay); color: var(--muc); font-size: 20px; line-height: 1;
-    font-family: var(--font);
+    background: var(--giay); color: var(--muc); font-size: 20px; line-height: 1; font-family: var(--font);
   }
   .nhom-dau .them:active { background: var(--nen); }
-  .khoan {
-    display: flex; align-items: center; gap: 10px;
-    padding: 10px 12px 10px 20px;
-    border-top: 1px solid var(--vien);
-  }
+  .khoan { display: flex; align-items: center; gap: 10px; padding: 10px 12px 10px 20px; border-top: 1px solid var(--vien); }
   .khoan .mota { flex: 1; min-width: 0; overflow-wrap: anywhere; }
   .khoan .tien { color: var(--muc); }
-  .khoan .xoa {
-    border: 0; background: none; color: var(--muc-nhat);
-    font-size: 14px; padding: 8px; font-family: var(--font);
-  }
+  .khoan .ngay { width: 44px; flex: none; color: var(--muc-nhat); font-size: 14px; }
+  .khoan .xoa { border: 0; background: none; color: var(--muc-nhat); font-size: 14px; padding: 8px; font-family: var(--font); }
   .khoan .xoa:active { color: var(--nguy); }
   .trong { padding: 0 14px 12px 20px; color: var(--muc-nhat); font-size: 14px; }
 
+  /* ===== Tab Kết quả ===== */
+  .kq { padding: 12px 14px 0; display: grid; gap: 12px; }
+  .doi { display: flex; gap: 8px; }
+  .doi button {
+    flex: 1; height: 42px; border-radius: 10px; font-size: 15px; font-weight: 600;
+    font-family: var(--font); border: 1.5px solid var(--vien); background: var(--giay); color: var(--muc-nhat);
+  }
+  .doi button.chon { border-color: var(--nhan); color: var(--nhan); background: #E8EFF8; }
+  .the { background: var(--giay); border: 1px solid var(--vien); border-radius: 14px; padding: 16px; }
+  .the h3 { margin: 0 0 12px; font-size: 15px; color: var(--muc-nhat); font-weight: 600; }
+  .donut { display: block; width: 220px; height: 220px; margin: 4px auto 16px; }
+  .chu-giai .dong { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid var(--vien); }
+  .chu-giai .dong:first-child { border-top: 0; }
+  .chu-giai .cham { width: 14px; height: 14px; border-radius: 4px; background: var(--mau); flex: none; }
+  .chu-giai .ten { flex: 1; }
+  .chu-giai .phan-tram { width: 56px; text-align: right; color: var(--muc-nhat); font-size: 14px; }
+  .chu-giai .tien { font-weight: 600; }
+  .rong { padding: 24px 8px; text-align: center; color: var(--muc-nhat); }
+  .cot svg { width: 100%; height: auto; display: block; }
+  .chip-mau { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; font-size: 13px; color: var(--muc-nhat); }
+  .chip-mau span::before {
+    content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px;
+    background: var(--mau); margin-right: 6px;
+  }
+  .cuon { overflow-x: auto; }
+  table { border-collapse: collapse; font-size: 13px; min-width: 100%; }
+  th, td { padding: 8px 10px; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--vien); }
+  th { background: #D9D9D9; color: #000; font-weight: 700; }
+  th:first-child, td:first-child { text-align: left; position: sticky; left: 0; background: var(--giay); }
+  th:first-child { background: #D9D9D9; }
+  tr.tong td { background: #D9D9D9; font-weight: 700; }
+  td.khong { color: #A5B0BA; }
+
   /* ===== Nút thêm khoản chi ===== */
   .nut-noi {
-    position: fixed; left: 14px; right: 14px;
-    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
-    height: 56px; border: 0; border-radius: 16px;
-    background: var(--nhan); color: #fff;
-    font-size: 17px; font-weight: 600; font-family: var(--font);
-    box-shadow: 0 6px 18px rgba(31,78,140,.35);
+    position: fixed; left: 14px; right: 14px; bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+    height: 56px; border: 0; border-radius: 16px; background: var(--nhan); color: #fff;
+    font-size: 17px; font-weight: 600; font-family: var(--font); box-shadow: 0 6px 18px rgba(31,78,140,.35);
   }
   .nut-noi:active { filter: brightness(.92); }
 
   /* ===== Bảng nhập ===== */
-  .phu {
-    position: fixed; inset: 0; background: rgba(27,39,51,.5);
-    display: none; align-items: flex-end; z-index: 10;
-  }
+  .phu { position: fixed; inset: 0; background: rgba(27,39,51,.5); display: none; align-items: flex-end; z-index: 10; }
   .phu.mo { display: flex; }
   .bang {
-    width: 100%; background: var(--giay);
-    border-radius: 20px 20px 0 0;
-    padding: 18px 16px calc(18px + env(safe-area-inset-bottom, 0px));
-    max-height: 92vh; overflow-y: auto;
+    width: 100%; background: var(--giay); border-radius: 20px 20px 0 0;
+    padding: 18px 16px calc(18px + env(safe-area-inset-bottom, 0px)); max-height: 92vh; overflow-y: auto;
   }
   .bang h2 { margin: 0 0 12px; font-size: 18px; }
   .chip-hang { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
@@ -120,10 +136,9 @@
   }
   .chip.chon { border-color: var(--nhan); background: var(--nhan); color: #fff; }
   label { display: block; font-size: 14px; color: var(--muc-nhat); margin: 0 0 6px; }
-  input[type=text], input[inputmode] {
+  input[type=text], input[type=date], input[inputmode] {
     width: 100%; height: 50px; border: 1.5px solid var(--vien); border-radius: 12px;
-    padding: 0 14px; font-size: 18px; font-family: var(--font); color: var(--muc);
-    background: var(--giay);
+    padding: 0 14px; font-size: 18px; font-family: var(--font); color: var(--muc); background: var(--giay);
   }
   input:focus { outline: 3px solid rgba(31,78,140,.3); border-color: var(--nhan); }
   .hang-tien { display: flex; gap: 8px; }
@@ -146,15 +161,21 @@
 
 <header>
   <div class="thang">
-    <button id="lui" aria-label="Tháng trước">‹</button>
+    <button id="lui" aria-label="Trước">‹</button>
     <div class="ten" id="tenThang"></div>
-    <button id="tien" aria-label="Tháng sau">›</button>
+    <button id="tien" aria-label="Sau">›</button>
   </div>
-  <div class="tong-nhan">Tổng chi trong tháng</div>
+  <div class="tong-nhan" id="tongNhan">Tổng chi trong tháng</div>
   <div class="tong-so so" id="tongThang"></div>
 </header>
 
+<div class="tabs">
+  <button id="tabNhap" class="chon">Nhập</button>
+  <button id="tabKq">Kết quả</button>
+</div>
+
 <main id="danhSach"></main>
+<div class="kq" id="ketQua" style="display:none"></div>
 
 <button class="nut-noi" id="moBang">+ Thêm khoản chi</button>
 
@@ -166,6 +187,11 @@
     <div class="truong">
       <label for="oMoTa">Chi cho việc gì</label>
       <input type="text" id="oMoTa" autocomplete="off" placeholder="Ví dụ: đi chợ">
+    </div>
+
+    <div class="truong">
+      <label for="oNgay">Ngày chi</label>
+      <input type="date" id="oNgay">
     </div>
 
     <div class="truong">
@@ -197,7 +223,7 @@
   var KHOA = "so_chi_tieu_v1";
 
   // ===== 2. Dữ liệu: mảng các khoản chi, lưu trong localStorage =====
-  // Mỗi khoản: { id, thang: "2026-11", nhom: "doan", mota: "...", tien: 123000 }
+  // Mỗi khoản: { id, thang: "2026-11", ngay: "2026-11-05", nhom: "doan", mota: "...", tien: 123000 }
   var duLieu = taiDuLieu();
 
   function taiDuLieu() {
@@ -211,26 +237,34 @@
     catch (e) { alert("Không lưu được dữ liệu trên trình duyệt này."); }
   }
 
-  // ===== 3. Tháng đang xem =====
+  // ===== 3. Trạng thái màn hình =====
   var hn = new Date();
   var nam = hn.getFullYear();
   var thang = hn.getMonth() + 1;
+  var tab = "nhap";      // "nhap" hoặc "ketqua"
+  var kq = "thang";      // trong tab Kết quả: "thang" hoặc "nam"
 
-  function khoaThang() {
-    return nam + "-" + (thang < 10 ? "0" + thang : thang);
-  }
+  function hai(n) { return n < 10 ? "0" + n : "" + n; }
+  function khoaThang(y, m) { return y + "-" + hai(m); }
+  function khoaThangHienTai() { return khoaThang(nam, thang); }
 
   // ===== 4. Hàm tiện ích =====
-  function dinhDangTien(n) {
-    return Number(n).toLocaleString("vi-VN");
+  function dinhDangTien(n) { return Number(n).toLocaleString("vi-VN"); }
+  function hienNgay(s) {            // "2026-11-05" -> "05/11"
+    if (!s) return "-";
+    var p = s.split("-");
+    return p[2] + "/" + p[1];
   }
-  function an(s) { // tránh người dùng gõ ký tự HTML làm hỏng trang
+  function an(s) {                  // tránh ký tự HTML làm hỏng trang
     var d = document.createElement("div");
     d.textContent = s;
     return d.innerHTML;
   }
-  // "500000+250.000" -> 750000 ; sai cú pháp -> null
-  function tinhTien(chuoi) {
+  function gon(n) {                 // 12500000 -> "12,5 tr"
+    if (n >= 1000000) return (n / 1000000).toFixed(1).replace(".", ",") + " tr";
+    return Math.round(n / 1000) + " k";
+  }
+  function tinhTien(chuoi) {        // "500000+250.000" -> 750000 ; sai cú pháp -> null
     var phan = chuoi.split("+");
     var tong = 0;
     for (var i = 0; i < phan.length; i++) {
@@ -241,19 +275,52 @@
     }
     return tong;
   }
+  // Tổng tiền của một nhóm trong một tháng (k = "2026-11")
+  function tongNhomThang(k, idNhom) {
+    var t = 0;
+    duLieu.forEach(function (x) {
+      if (x.thang === k && x.nhom === idNhom) t += x.tien;
+    });
+    return t;
+  }
 
-  // ===== 5. Vẽ màn hình chính =====
+  // ===== 5. Vẽ: đầu trang + chọn tab =====
   function ve() {
-    document.getElementById("tenThang").textContent = "Tháng " + thang + "/" + nam;
-    var k = khoaThang();
-    var cacKhoan = duLieu.filter(function (x) { return x.thang === k; });
-
+    var cheNam = (tab === "ketqua" && kq === "nam");
     var tong = 0;
+    if (cheNam) {
+      document.getElementById("tenThang").textContent = "Năm " + nam;
+      document.getElementById("tongNhan").textContent = "Tổng chi trong năm";
+      for (var m = 1; m <= 12; m++) {
+        NHOM.forEach(function (n) { tong += tongNhomThang(khoaThang(nam, m), n.id); });
+      }
+    } else {
+      document.getElementById("tenThang").textContent = "Tháng " + thang + "/" + nam;
+      document.getElementById("tongNhan").textContent = "Tổng chi trong tháng";
+      NHOM.forEach(function (n) { tong += tongNhomThang(khoaThangHienTai(), n.id); });
+    }
+    document.getElementById("tongThang").innerHTML = dinhDangTien(tong) + "<small>đ</small>";
+
+    document.getElementById("tabNhap").className = (tab === "nhap") ? "chon" : "";
+    document.getElementById("tabKq").className = (tab === "ketqua") ? "chon" : "";
+    document.getElementById("danhSach").style.display = (tab === "nhap") ? "" : "none";
+    document.getElementById("ketQua").style.display = (tab === "ketqua") ? "" : "none";
+    document.getElementById("moBang").style.display = (tab === "nhap") ? "" : "none";
+
+    if (tab === "nhap") veNhap(); else veKetQua();
+  }
+
+  // ===== 6. Tab Nhập: danh sách các nhóm =====
+  function veNhap() {
+    var k = khoaThangHienTai();
+    var cacKhoan = duLieu.filter(function (x) { return x.thang === k; });
     var html = "";
     NHOM.forEach(function (n) {
       var cua = cacKhoan.filter(function (x) { return x.nhom === n.id; });
+      cua.sort(function (a, b) {
+        return (a.ngay || "").localeCompare(b.ngay || "") || a.id - b.id;
+      });
       var tn = cua.reduce(function (s, x) { return s + x.tien; }, 0);
-      tong += tn;
 
       html += '<section class="nhom">' +
         '<div class="nhom-dau" style="--mau:' + n.mau + '">' +
@@ -267,6 +334,7 @@
       } else {
         cua.forEach(function (x) {
           html += '<div class="khoan">' +
+            '<div class="ngay so">' + hienNgay(x.ngay) + '</div>' +
             '<div class="mota">' + an(x.mota) + '</div>' +
             '<div class="tien so">' + dinhDangTien(x.tien) + '</div>' +
             '<button class="xoa" data-xoa="' + x.id + '">Xóa</button>' +
@@ -275,28 +343,158 @@
       }
       html += '</section>';
     });
-
     document.getElementById("danhSach").innerHTML = html;
-    document.getElementById("tongThang").innerHTML =
-      dinhDangTien(tong) + '<small>đ</small>';
   }
 
-  // ===== 6. Chuyển tháng =====
+  // ===== 7. Tab Kết quả =====
+  function veKetQua() {
+    var html = '<div class="doi">' +
+      '<button data-kq="thang" class="' + (kq === "thang" ? "chon" : "") + '">Theo tháng</button>' +
+      '<button data-kq="nam" class="' + (kq === "nam" ? "chon" : "") + '">Theo năm</button>' +
+      '</div>';
+    html += (kq === "thang") ? khungThang() : khungNam();
+    document.getElementById("ketQua").innerHTML = html;
+  }
+
+  // 7a. Biểu đồ tròn của tháng (giống "TÓM TẮT CHI TIÊU" trong Excel)
+  function khungThang() {
+    var k = khoaThangHienTai();
+    var ds = NHOM.map(function (n) {
+      return { ten: n.ten, mau: n.mau, tien: tongNhomThang(k, n.id) };
+    });
+    var tong = ds.reduce(function (s, x) { return s + x.tien; }, 0);
+    if (tong === 0) {
+      return '<div class="the"><div class="rong">Chưa có chi tiêu trong tháng này</div></div>';
+    }
+    // Mỗi lát là một vòng tròn có nét đứt; chu vi vòng = 100 nên độ dài nét = số %
+    var svg = '<svg class="donut" viewBox="0 0 42 42" role="img" aria-label="Biểu đồ chi tiêu theo nhóm">' +
+      '<circle cx="21" cy="21" r="15.9155" fill="none" stroke="#E3E8ED" stroke-width="7"/>';
+    var daDung = 0;
+    ds.forEach(function (x) {
+      var p = x.tien / tong * 100;
+      if (p > 0) {
+        svg += '<circle cx="21" cy="21" r="15.9155" fill="none" stroke="' + x.mau + '" stroke-width="7"' +
+          ' stroke-dasharray="' + p + ' ' + (100 - p) + '" stroke-dashoffset="' + (25 - daDung) + '"/>';
+      }
+      daDung += p;
+    });
+    svg += '</svg>';
+
+    var cg = '<div class="chu-giai">';
+    ds.forEach(function (x) {
+      var p = (x.tien / tong * 100).toFixed(1).replace(".", ",");
+      cg += '<div class="dong" style="--mau:' + x.mau + '">' +
+        '<span class="cham"></span><span class="ten">' + x.ten + '</span>' +
+        '<span class="phan-tram so">' + p + '%</span>' +
+        '<span class="tien so">' + dinhDangTien(x.tien) + '</span></div>';
+    });
+    cg += '</div>';
+    return '<div class="the"><h3>Tóm tắt chi tiêu tháng ' + thang + '/' + nam + '</h3>' + svg + cg + '</div>';
+  }
+
+  // 7b. Cả năm: biểu đồ cột 12 tháng (chia màu theo nhóm) + bảng số
+  function khungNam() {
+    var m, i;
+    var bang = [];   // bang[m][i] = tiền của tháng m, nhóm i
+    var tongThangArr = [];
+    var tongNam = 0, lonNhat = 0;
+    for (m = 1; m <= 12; m++) {
+      var hang = [], tt = 0;
+      for (i = 0; i < NHOM.length; i++) {
+        var v = tongNhomThang(khoaThang(nam, m), NHOM[i].id);
+        hang.push(v); tt += v;
+      }
+      bang[m] = hang; tongThangArr[m] = tt;
+      tongNam += tt;
+      if (tt > lonNhat) lonNhat = tt;
+    }
+    if (tongNam === 0) {
+      return '<div class="the"><div class="rong">Chưa có chi tiêu trong năm ' + nam + '</div></div>';
+    }
+
+    // Biểu đồ cột chồng
+    var cao = 140, day = 160, buoc = 340 / 12, rong = 20;
+    var svg = '<svg viewBox="0 0 360 190" role="img" aria-label="Chi tiêu 12 tháng">' +
+      '<text x="10" y="12" font-size="10" fill="#5B6B7A">Cao nhất: ' + gon(lonNhat) + '</text>' +
+      '<line x1="10" y1="' + day + '" x2="350" y2="' + day + '" stroke="#D9DFE5"/>';
+    for (m = 1; m <= 12; m++) {
+      var x = 10 + (m - 1) * buoc + (buoc - rong) / 2;
+      var y = day;
+      for (i = 0; i < NHOM.length; i++) {
+        var h = bang[m][i] / lonNhat * cao;
+        if (h > 0) {
+          y -= h;
+          svg += '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + rong +
+                 '" height="' + h.toFixed(1) + '" fill="' + NHOM[i].mau + '"/>';
+        }
+      }
+      var chon = (m === thang) ? ' font-weight="700"' : '';
+      svg += '<text x="' + (x + rong / 2).toFixed(1) + '" y="178" font-size="10" text-anchor="middle" fill="#5B6B7A"' + chon + '>' + m + '</text>';
+    }
+    svg += '</svg>';
+
+    var chip = '<div class="chip-mau">';
+    NHOM.forEach(function (n) { chip += '<span style="--mau:' + n.mau + '">' + n.ten + '</span>'; });
+    chip += '</div>';
+
+    // Bảng số: hàng = nhóm, cột = Cả năm + 12 tháng
+    var tb = '<table><thead><tr><th>Nhóm</th><th>Cả năm</th>';
+    for (m = 1; m <= 12; m++) tb += '<th>T' + m + '</th>';
+    tb += '</tr></thead><tbody>';
+    for (i = 0; i < NHOM.length; i++) {
+      var tongNhom = 0;
+      for (m = 1; m <= 12; m++) tongNhom += bang[m][i];
+      tb += '<tr><td>' + NHOM[i].ten + '</td><td class="so"><b>' + dinhDangTien(tongNhom) + '</b></td>';
+      for (m = 1; m <= 12; m++) {
+        var c = bang[m][i];
+        tb += c ? '<td class="so">' + dinhDangTien(c) + '</td>' : '<td class="khong">-</td>';
+      }
+      tb += '</tr>';
+    }
+    tb += '<tr class="tong"><td>Tổng</td><td class="so">' + dinhDangTien(tongNam) + '</td>';
+    for (m = 1; m <= 12; m++) tb += '<td class="so">' + (tongThangArr[m] ? dinhDangTien(tongThangArr[m]) : '-') + '</td>';
+    tb += '</tr></tbody></table>';
+
+    return '<div class="the cot"><h3>Chi tiêu từng tháng năm ' + nam + '</h3>' + svg + chip + '</div>' +
+           '<div class="the"><h3>Bảng tổng hợp (đồng)</h3><div class="cuon">' + tb + '</div></div>';
+  }
+
+  // ===== 8. Chuyển tab, chuyển tháng/năm =====
+  document.getElementById("tabNhap").onclick = function () { tab = "nhap"; ve(); };
+  document.getElementById("tabKq").onclick = function () { tab = "ketqua"; ve(); };
+  document.getElementById("ketQua").onclick = function (e) {
+    var v = e.target.getAttribute("data-kq");
+    if (v) { kq = v; ve(); }
+  };
   document.getElementById("lui").onclick = function () {
-    thang--; if (thang < 1) { thang = 12; nam--; }
+    if (tab === "ketqua" && kq === "nam") { nam--; }
+    else { thang--; if (thang < 1) { thang = 12; nam--; } }
     ve();
   };
   document.getElementById("tien").onclick = function () {
-    thang++; if (thang > 12) { thang = 1; nam++; }
+    if (tab === "ketqua" && kq === "nam") { nam++; }
+    else { thang++; if (thang > 12) { thang = 1; nam++; } }
     ve();
   };
 
-  // ===== 7. Bảng nhập =====
+  // ===== 9. Bảng nhập khoản chi =====
   var nhomChon = "doan";
   var phu = document.getElementById("phu");
   var oMoTa = document.getElementById("oMoTa");
   var oTien = document.getElementById("oTien");
   var xemTruoc = document.getElementById("xemTruoc");
+  var oNgay = document.getElementById("oNgay");
+
+  // Ô ngày chỉ cho chọn trong tháng đang xem; mặc định là hôm nay nếu hôm nay thuộc tháng đó
+  function datNgayMacDinh() {
+    var k = khoaThangHienTai();
+    var soNgay = new Date(nam, thang, 0).getDate();
+    oNgay.min = k + "-01";
+    oNgay.max = k + "-" + hai(soNgay);
+    var h = new Date();
+    var homNay = h.getFullYear() + "-" + hai(h.getMonth() + 1) + "-" + hai(h.getDate());
+    oNgay.value = (homNay.slice(0, 7) === k) ? homNay : k + "-01";
+  }
 
   function veChip() {
     var h = "";
@@ -312,6 +510,7 @@
     veChip();
     oMoTa.value = "";
     oTien.value = "";
+    datNgayMacDinh();
     capNhatXemTruoc();
     phu.classList.add("mo");
     setTimeout(function () { oMoTa.focus(); }, 50);
@@ -340,7 +539,6 @@
     oTien.focus();
     capNhatXemTruoc();
   };
-
   document.getElementById("chipNhom").onclick = function (e) {
     var id = e.target.getAttribute("data-chip");
     if (id) { nhomChon = id; veChip(); }
@@ -356,13 +554,13 @@
       return;
     }
     if (mota === "") mota = NHOM.filter(function (n) { return n.id === nhomChon; })[0].ten;
-    duLieu.push({ id: Date.now(), thang: khoaThang(), nhom: nhomChon, mota: mota, tien: tien });
+    duLieu.push({ id: Date.now(), thang: khoaThangHienTai(), ngay: oNgay.value, nhom: nhomChon, mota: mota, tien: tien });
     luuDuLieu();
     dongBang();
     ve();
   };
 
-  // ===== 8. Bấm trong danh sách: nút + của nhóm, nút Xóa =====
+  // ===== 10. Bấm trong danh sách: nút + của nhóm, nút Xóa =====
   document.getElementById("danhSach").onclick = function (e) {
     var nh = e.target.getAttribute("data-nhom");
     if (nh) { moBang(nh); return; }
