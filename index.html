@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Sổ chi tiêu">
+<meta name="theme-color" content="#1B2733">
+<title>Sổ chi tiêu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --nen: #EEF1F4;
+    --giay: #FFFFFF;
+    --muc: #1B2733;
+    --muc-nhat: #5B6B7A;
+    --vien: #D9DFE5;
+    --nhan: #1F4E8C;
+    --nguy: #B3261E;
+    --font: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--nen);
+    color: var(--muc);
+    font-family: var(--font);
+    font-size: 16px;
+    line-height: 1.4;
+    padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+    -webkit-tap-highlight-color: transparent;
+  }
+  .so { font-variant-numeric: tabular-nums; }
+
+  /* ===== Đầu trang: chọn tháng + tổng ===== */
+  header {
+    background: var(--muc);
+    color: #fff;
+    padding: calc(14px + env(safe-area-inset-top, 0px)) 18px 22px;
+  }
+  .thang {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .thang button {
+    width: 44px; height: 44px; border: 0; border-radius: 12px;
+    background: rgba(255,255,255,.12); color: #fff; font-size: 22px; line-height: 1;
+    font-family: var(--font);
+  }
+  .thang button:active { background: rgba(255,255,255,.25); }
+  .thang .ten { font-size: 17px; font-weight: 600; }
+  .tong-nhan { margin: 14px 0 2px; font-size: 14px; color: #B9C6D3; }
+  .tong-so { font-size: 38px; font-weight: 700; letter-spacing: -0.5px; }
+  .tong-so small { font-size: 20px; font-weight: 500; margin-left: 4px; color: #B9C6D3; }
+
+  /* ===== Các nhóm chi tiêu ===== */
+  main { padding: 14px 14px 0; display: grid; gap: 12px; }
+  .nhom {
+    background: var(--giay);
+    border: 1px solid var(--vien);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .nhom-dau {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 12px 12px 14px;
+    border-left: 6px solid var(--mau);
+  }
+  .nhom-dau .ten { flex: 1; font-weight: 600; }
+  .nhom-dau .tien { font-weight: 600; }
+  .nhom-dau .them {
+    width: 36px; height: 36px; border: 1px solid var(--vien); border-radius: 10px;
+    background: var(--giay); color: var(--muc); font-size: 20px; line-height: 1;
+    font-family: var(--font);
+  }
+  .nhom-dau .them:active { background: var(--nen); }
+  .khoan {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px 10px 20px;
+    border-top: 1px solid var(--vien);
+  }
+  .khoan .mota { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+  .khoan .tien { color: var(--muc); }
+  .khoan .xoa {
+    border: 0; background: none; color: var(--muc-nhat);
+    font-size: 14px; padding: 8px; font-family: var(--font);
+  }
+  .khoan .xoa:active { color: var(--nguy); }
+  .trong { padding: 0 14px 12px 20px; color: var(--muc-nhat); font-size: 14px; }
+
+  /* ===== Nút thêm khoản chi ===== */
+  .nut-noi {
+    position: fixed; left: 14px; right: 14px;
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+    height: 56px; border: 0; border-radius: 16px;
+    background: var(--nhan); color: #fff;
+    font-size: 17px; font-weight: 600; font-family: var(--font);
+    box-shadow: 0 6px 18px rgba(31,78,140,.35);
+  }
+  .nut-noi:active { filter: brightness(.92); }
+
+  /* ===== Bảng nhập ===== */
+  .phu {
+    position: fixed; inset: 0; background: rgba(27,39,51,.5);
+    display: none; align-items: flex-end; z-index: 10;
+  }
+  .phu.mo { display: flex; }
+  .bang {
+    width: 100%; background: var(--giay);
+    border-radius: 20px 20px 0 0;
+    padding: 18px 16px calc(18px + env(safe-area-inset-bottom, 0px));
+    max-height: 92vh; overflow-y: auto;
+  }
+  .bang h2 { margin: 0 0 12px; font-size: 18px; }
+  .chip-hang { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .chip {
+    border: 1.5px solid var(--vien); background: var(--giay); color: var(--muc);
+    border-radius: 999px; padding: 8px 14px; font-size: 15px; font-family: var(--font);
+  }
+  .chip.chon { border-color: var(--nhan); background: var(--nhan); color: #fff; }
+  label { display: block; font-size: 14px; color: var(--muc-nhat); margin: 0 0 6px; }
+  input[type=text], input[inputmode] {
+    width: 100%; height: 50px; border: 1.5px solid var(--vien); border-radius: 12px;
+    padding: 0 14px; font-size: 18px; font-family: var(--font); color: var(--muc);
+    background: var(--giay);
+  }
+  input:focus { outline: 3px solid rgba(31,78,140,.3); border-color: var(--nhan); }
+  .hang-tien { display: flex; gap: 8px; }
+  .hang-tien button {
+    width: 56px; border: 1.5px solid var(--vien); border-radius: 12px;
+    background: var(--nen); font-size: 24px; font-family: var(--font); color: var(--muc);
+  }
+  .xem-truoc { min-height: 24px; margin: 8px 0 14px; color: var(--muc-nhat); font-size: 15px; }
+  .xem-truoc.loi { color: var(--nguy); }
+  .hang-nut { display: flex; gap: 10px; margin-top: 6px; }
+  .hang-nut button {
+    flex: 1; height: 50px; border-radius: 12px; font-size: 17px; font-weight: 600;
+    font-family: var(--font); border: 1.5px solid var(--vien); background: var(--giay); color: var(--muc);
+  }
+  .hang-nut .luu { background: var(--nhan); border-color: var(--nhan); color: #fff; }
+  .truong { margin-bottom: 12px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="thang">
+    <button id="lui" aria-label="Tháng trước">‹</button>
+    <div class="ten" id="tenThang"></div>
+    <button id="tien" aria-label="Tháng sau">›</button>
+  </div>
+  <div class="tong-nhan">Tổng chi trong tháng</div>
+  <div class="tong-so so" id="tongThang"></div>
+</header>
+
+<main id="danhSach"></main>
+
+<button class="nut-noi" id="moBang">+ Thêm khoản chi</button>
+
+<div class="phu" id="phu">
+  <div class="bang" role="dialog" aria-modal="true" aria-label="Thêm khoản chi">
+    <h2>Thêm khoản chi</h2>
+    <div class="chip-hang" id="chipNhom"></div>
+
+    <div class="truong">
+      <label for="oMoTa">Chi cho việc gì</label>
+      <input type="text" id="oMoTa" autocomplete="off" placeholder="Ví dụ: đi chợ">
+    </div>
+
+    <div class="truong">
+      <label for="oTien">Số tiền (có thể cộng: 500000+250000)</label>
+      <div class="hang-tien">
+        <input type="text" id="oTien" inputmode="numeric" autocomplete="off" placeholder="0">
+        <button type="button" id="nutCong" aria-label="Thêm dấu cộng">+</button>
+      </div>
+      <div class="xem-truoc so" id="xemTruoc"></div>
+    </div>
+
+    <div class="hang-nut">
+      <button type="button" id="huy">Hủy</button>
+      <button type="button" class="luu" id="luu">Lưu</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ===== 1. Danh mục: đúng 6 nhóm như file Excel =====
+  var NHOM = [
+    { id: "doan",    ten: "Đồ ăn",            mau: "#D1603D" },
+    { id: "henho",   ten: "Hẹn hò",           mau: "#B04A7A" },
+    { id: "batbuoc", ten: "Chi tiêu bắt buộc", mau: "#2F5D8A" },
+    { id: "khac",    ten: "Chi tiêu khác",    mau: "#7A7F87" },
+    { id: "dilai",   ten: "Đi lại",           mau: "#3E8E7E" },
+    { id: "dautu",   ten: "Đầu tư",           mau: "#8A6D1F" }
+  ];
+  var KHOA = "so_chi_tieu_v1";
+
+  // ===== 2. Dữ liệu: mảng các khoản chi, lưu trong localStorage =====
+  // Mỗi khoản: { id, thang: "2026-11", nhom: "doan", mota: "...", tien: 123000 }
+  var duLieu = taiDuLieu();
+
+  function taiDuLieu() {
+    try {
+      var s = localStorage.getItem(KHOA);
+      return s ? JSON.parse(s) : [];
+    } catch (e) { return []; }
+  }
+  function luuDuLieu() {
+    try { localStorage.setItem(KHOA, JSON.stringify(duLieu)); }
+    catch (e) { alert("Không lưu được dữ liệu trên trình duyệt này."); }
+  }
+
+  // ===== 3. Tháng đang xem =====
+  var hn = new Date();
+  var nam = hn.getFullYear();
+  var thang = hn.getMonth() + 1;
+
+  function khoaThang() {
+    return nam + "-" + (thang < 10 ? "0" + thang : thang);
+  }
+
+  // ===== 4. Hàm tiện ích =====
+  function dinhDangTien(n) {
+    return Number(n).toLocaleString("vi-VN");
+  }
+  function an(s) { // tránh người dùng gõ ký tự HTML làm hỏng trang
+    var d = document.createElement("div");
+    d.textContent = s;
+    return d.innerHTML;
+  }
+  // "500000+250.000" -> 750000 ; sai cú pháp -> null
+  function tinhTien(chuoi) {
+    var phan = chuoi.split("+");
+    var tong = 0;
+    for (var i = 0; i < phan.length; i++) {
+      var p = phan[i].replace(/[.\s,]/g, "");
+      if (p === "") continue;
+      if (!/^\d+$/.test(p)) return null;
+      tong += parseInt(p, 10);
+    }
+    return tong;
+  }
+
+  // ===== 5. Vẽ màn hình chính =====
+  function ve() {
+    document.getElementById("tenThang").textContent = "Tháng " + thang + "/" + nam;
+    var k = khoaThang();
+    var cacKhoan = duLieu.filter(function (x) { return x.thang === k; });
+
+    var tong = 0;
+    var html = "";
+    NHOM.forEach(function (n) {
+      var cua = cacKhoan.filter(function (x) { return x.nhom === n.id; });
+      var tn = cua.reduce(function (s, x) { return s + x.tien; }, 0);
+      tong += tn;
+
+      html += '<section class="nhom">' +
+        '<div class="nhom-dau" style="--mau:' + n.mau + '">' +
+          '<div class="ten">' + n.ten + '</div>' +
+          '<div class="tien so">' + dinhDangTien(tn) + ' đ</div>' +
+          '<button class="them" data-nhom="' + n.id + '" aria-label="Thêm vào ' + n.ten + '">+</button>' +
+        '</div>';
+
+      if (cua.length === 0) {
+        html += '<div class="trong">Chưa có khoản nào</div>';
+      } else {
+        cua.forEach(function (x) {
+          html += '<div class="khoan">' +
+            '<div class="mota">' + an(x.mota) + '</div>' +
+            '<div class="tien so">' + dinhDangTien(x.tien) + '</div>' +
+            '<button class="xoa" data-xoa="' + x.id + '">Xóa</button>' +
+          '</div>';
+        });
+      }
+      html += '</section>';
+    });
+
+    document.getElementById("danhSach").innerHTML = html;
+    document.getElementById("tongThang").innerHTML =
+      dinhDangTien(tong) + '<small>đ</small>';
+  }
+
+  // ===== 6. Chuyển tháng =====
+  document.getElementById("lui").onclick = function () {
+    thang--; if (thang < 1) { thang = 12; nam--; }
+    ve();
+  };
+  document.getElementById("tien").onclick = function () {
+    thang++; if (thang > 12) { thang = 1; nam++; }
+    ve();
+  };
+
+  // ===== 7. Bảng nhập =====
+  var nhomChon = "doan";
+  var phu = document.getElementById("phu");
+  var oMoTa = document.getElementById("oMoTa");
+  var oTien = document.getElementById("oTien");
+  var xemTruoc = document.getElementById("xemTruoc");
+
+  function veChip() {
+    var h = "";
+    NHOM.forEach(function (n) {
+      h += '<button type="button" class="chip' + (n.id === nhomChon ? " chon" : "") +
+           '" data-chip="' + n.id + '">' + n.ten + '</button>';
+    });
+    document.getElementById("chipNhom").innerHTML = h;
+  }
+
+  function moBang(idNhom) {
+    if (idNhom) nhomChon = idNhom;
+    veChip();
+    oMoTa.value = "";
+    oTien.value = "";
+    capNhatXemTruoc();
+    phu.classList.add("mo");
+    setTimeout(function () { oMoTa.focus(); }, 50);
+  }
+  function dongBang() { phu.classList.remove("mo"); }
+
+  function capNhatXemTruoc() {
+    var v = oTien.value.trim();
+    xemTruoc.className = "xem-truoc so";
+    if (v === "") { xemTruoc.textContent = ""; return; }
+    var t = tinhTien(v);
+    if (t === null) {
+      xemTruoc.className = "xem-truoc loi";
+      xemTruoc.textContent = "Chỉ nhập số và dấu +";
+    } else {
+      xemTruoc.textContent = "= " + dinhDangTien(t) + " đ";
+    }
+  }
+
+  document.getElementById("moBang").onclick = function () { moBang(); };
+  document.getElementById("huy").onclick = dongBang;
+  phu.onclick = function (e) { if (e.target === phu) dongBang(); };
+  oTien.oninput = capNhatXemTruoc;
+  document.getElementById("nutCong").onclick = function () {
+    oTien.value = oTien.value + "+";
+    oTien.focus();
+    capNhatXemTruoc();
+  };
+
+  document.getElementById("chipNhom").onclick = function (e) {
+    var id = e.target.getAttribute("data-chip");
+    if (id) { nhomChon = id; veChip(); }
+  };
+
+  document.getElementById("luu").onclick = function () {
+    var tien = tinhTien(oTien.value.trim());
+    var mota = oMoTa.value.trim();
+    if (!tien) {
+      xemTruoc.className = "xem-truoc loi";
+      xemTruoc.textContent = "Nhập số tiền lớn hơn 0";
+      oTien.focus();
+      return;
+    }
+    if (mota === "") mota = NHOM.filter(function (n) { return n.id === nhomChon; })[0].ten;
+    duLieu.push({ id: Date.now(), thang: khoaThang(), nhom: nhomChon, mota: mota, tien: tien });
+    luuDuLieu();
+    dongBang();
+    ve();
+  };
+
+  // ===== 8. Bấm trong danh sách: nút + của nhóm, nút Xóa =====
+  document.getElementById("danhSach").onclick = function (e) {
+    var nh = e.target.getAttribute("data-nhom");
+    if (nh) { moBang(nh); return; }
+    var idXoa = e.target.getAttribute("data-xoa");
+    if (idXoa) {
+      if (confirm("Xóa khoản này?")) {
+        duLieu = duLieu.filter(function (x) { return String(x.id) !== idXoa; });
+        luuDuLieu();
+        ve();
+      }
+    }
+  };
+
+  ve();
+</script>
+</body>
+</html>
